@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Context from '../../context';
 import './TodoItem.css';
 
-function TodoItem({ todo, index, onChange }) {
+function TodoItem({ todo, onChange }) {
   const { removeTodo } = useContext(Context);
   const classes = [];
 
@@ -18,25 +18,25 @@ function TodoItem({ todo, index, onChange }) {
           type="checkbox"
           onChange={() => onChange(todo.id)}
         />
-        {/* To-Do list should be started by 1-st element */}
-        <strong>{++index}</strong>
         &nbsp;
-        {todo.title}
+        <strong>{todo.title}</strong>
+        &nbsp;
+        {todo.description}
       </span>
-      <button
-        className="remove-button"
-        title="remove task"
-        onClick={removeTodo.bind(null, todo.id)}
-      >
-        &times;
-      </button>
+      <div className="buttons__wrapper">
+        <div className="edit-button" title="edit task"></div>
+        <div
+          className="remove-button"
+          title="remove task"
+          onClick={removeTodo.bind(null, todo.id)}
+        ></div>
+      </div>
     </li>
   );
 }
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
-  index: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 };
 

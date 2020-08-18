@@ -9,27 +9,52 @@ li {
 }
 
 input {
-  margin-right: 1rem;
-  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+.buttons__wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 80px;
 }
 
 .remove-button {
-  background: rgb(216, 99, 128);
-  border-radius: 40%;
+  content: url('../../svg/delete.svg');
   cursor: pointer;
-  color: #fff;
+  width: 30px;
+  height: 30px;
   border: none;
 }
 
-.remove-button:hover {
+.remove-button,
+.edit-button {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border: none;
+}
+
+.remove-button {
+  content: url('../../svg/delete.svg');
+}
+
+.edit-button {
+  content: url('../../svg/edit.svg');
+}
+
+.remove-button:hover,
+.edit-button:hover {
   opacity: 0.6;
 }
 
-.remove-button:focus {
+.remove-button:focus,
+.edit-button:focus {
   outline: none;
 }
 
-.remove-button:active {
+.remove-button:active,
+.edit-button:active {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
