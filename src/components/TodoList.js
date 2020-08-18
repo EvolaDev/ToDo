@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TodoItem from './TodoItem';
-
-const resetStyles = {
-  ul: {
-    listStyles: 'none',
-    margin: 0,
-    padding: 0,
-  },
-};
+import TodoItem from './TodoItem/TodoItem';
 
 function TodoList(props) {
   return (
-    <ul style={resetStyles.ul}>
+    <ul>
       {props.todoArray.map((todo, index) => {
-        return <TodoItem todo={todo} key={todo.id} index={index} />;
+        return (
+          <TodoItem
+            todo={todo}
+            key={todo.id}
+            index={index}
+            onChange={props.onToggle}
+          />
+        );
       })}
     </ul>
   );
@@ -22,6 +21,7 @@ function TodoList(props) {
 
 TodoList.propTypes = {
   todoArray: PropTypes.arrayOf(PropTypes.object),
+  onToggle: PropTypes.func.isRequired,
 };
 
 export default TodoList;

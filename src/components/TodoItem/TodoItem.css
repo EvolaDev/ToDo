@@ -1,0 +1,38 @@
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 5rem;
+}
+
+input {
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.remove-button {
+  background: rgb(216, 99, 128);
+  border-radius: 40%;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+}
+
+.remove-button:hover {
+  opacity: 0.6;
+}
+
+.remove-button:focus {
+  outline: none;
+}
+
+.remove-button:active {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.done {
+  text-decoration: line-through;
+}
