@@ -4,7 +4,13 @@ import Context from '../../context';
 import './TodoItem.css';
 
 function TodoItem({ todo, onChange }) {
-  const { removeTodo, editTodo, updateTitle, updateDescription } = useContext(Context);
+  const {
+    removeTodo,
+    editTodo,
+    updateTitle,
+    updateDescription,
+    saveTodo,
+  } = useContext(Context);
   const classes = [];
 
   if (todo.completed) {
@@ -12,7 +18,7 @@ function TodoItem({ todo, onChange }) {
   }
   return (
     <li>
-      <span className={classes.join(' ')}>
+      <div className={`todo-content ${classes.join(' ')}`}>
         <input
           checked={todo.completed}
           type="checkbox"
@@ -25,7 +31,9 @@ function TodoItem({ todo, onChange }) {
             onChange={(event) => updateTitle(event.target.value, todo.id)}
           />
         ) : (
-          <strong>{todo.title}:</strong>
+          <div className="todo-title" title={todo.title}>
+            <strong>{todo.title}:</strong>
+          </div>
         )}
         &nbsp;
         {todo.isEdited ? (
@@ -34,15 +42,25 @@ function TodoItem({ todo, onChange }) {
             onChange={(event) => updateDescription(event.target.value, todo.id)}
           />
         ) : (
-          todo.description
+          <div className="todo-description" title={todo.description}>
+            {todo.description}
+          </div>
         )}
-      </span>
+      </div>
       <div className="buttons__wrapper">
-        <div
-          className="edit-button"
-          title="edit task"
-          onClick={editTodo.bind(null, todo.id)}
-        ></div>
+        {todo.isEdited ? (
+          <div
+            className="save-button"
+            title="save-changes"
+            onClick={saveTodo.bind(null, todo.id)}
+          ></div>
+        ) : (
+          <div
+            className="edit-button"
+            title="edit task"
+            onClick={editTodo.bind(null, todo.id)}
+          ></div>
+        )}
         <div
           className="remove-button"
           title="remove task"

@@ -34,6 +34,8 @@ function AddTodo({ onCreate }) {
       onCreate({ title: title.value(), description: description.value() });
       title.clear();
       description.clear();
+    } else {
+      alert('title is required');
     }
   }
 
