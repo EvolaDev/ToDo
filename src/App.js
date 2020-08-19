@@ -2,13 +2,9 @@ import React from 'react';
 import TodoList from './components/TodoList';
 import Context from './context';
 import AddTodo from './components/AddTodo/AddTodo';
-import Modal from './components/Modal/Modal';
 
 function App() {
-  const [todoArray, setTodo] = React.useState([
-    { id: 1, completed: false, title: 'Купить хлеб' },
-    { id: 2, completed: false, title: 'Купить хлеб' },
-  ]);
+  const [todoArray, setTodo] = React.useState([]);
 
   function toggleTodo(id) {
     setTodo(
@@ -25,11 +21,40 @@ function App() {
     setTodo(todoArray.filter((todo) => todo.id !== id));
   }
 
-  function addTodo(title) {
+  function editTodo(id) {
+    const editedTodo = todoArray.find((todo) => todo.id === id);
+    editedTodo.isEdited = !editedTodo.isEdited;
+    setTodo([...todoArray]);
+  }
+
+  function updateInput(type, value, id) {
+    setTodo(
+      todoArray.map((todo) => {
+        if (todo.id === id) {
+          todo[type] = value;
+        }
+        return todo;
+      })
+    );
+  }
+
+  function updateTitle(value, id) {
+    const type = 'title';
+    updateInput(type, value, id);
+  }
+
+  function updateDescription(value, id) {
+    const type = 'description';
+    updateInput(type, value, id);
+  }
+
+  function addTodo({ title, description }) {
     setTodo(
       todoArray.concat([
         {
           title,
+          description,
+          isEdited: false,
           id: Date.now(),
           completed: false,
         },
@@ -38,16 +63,15 @@ function App() {
   }
 
   return (
-    <Context.Provider value={{ removeTodo }}>
+    <Context.Provider
+      value={{ removeTodo, editTodo, updateTitle, updateDescription }}
+    >
       <div className="wrapper">
-        <h1>To-Do List</h1>
-        <Modal />
+        <div className="page-title">
+          <h1>To-Do List</h1>
+        </div>
         <AddTodo onCreate={addTodo} />
-        {todoArray.length ? (
-          <TodoList todoArray={todoArray} onToggle={toggleTodo} />
-        ) : (
-          <p>You have no tasks!</p>
-        )}
+        <TodoList todoArray={todoArray} onToggle={toggleTodo} />
       </div>
     </Context.Provider>
   );

@@ -4,7 +4,7 @@ import Context from '../../context';
 import './TodoItem.css';
 
 function TodoItem({ todo, onChange }) {
-  const { removeTodo } = useContext(Context);
+  const { removeTodo, editTodo, updateTitle, updateDescription } = useContext(Context);
   const classes = [];
 
   if (todo.completed) {
@@ -19,12 +19,30 @@ function TodoItem({ todo, onChange }) {
           onChange={() => onChange(todo.id)}
         />
         &nbsp;
-        <strong>{todo.title}</strong>
+        {todo.isEdited ? (
+          <input
+            value={todo.title}
+            onChange={(event) => updateTitle(event.target.value, todo.id)}
+          />
+        ) : (
+          <strong>{todo.title}:</strong>
+        )}
         &nbsp;
-        {todo.description}
+        {todo.isEdited ? (
+          <input
+            value={todo.description}
+            onChange={(event) => updateDescription(event.target.value, todo.id)}
+          />
+        ) : (
+          todo.description
+        )}
       </span>
       <div className="buttons__wrapper">
-        <div className="edit-button" title="edit task"></div>
+        <div
+          className="edit-button"
+          title="edit task"
+          onClick={editTodo.bind(null, todo.id)}
+        ></div>
         <div
           className="remove-button"
           title="remove task"
@@ -38,6 +56,7 @@ function TodoItem({ todo, onChange }) {
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  isEdited: PropTypes.bool,
 };
 
 export default TodoItem;

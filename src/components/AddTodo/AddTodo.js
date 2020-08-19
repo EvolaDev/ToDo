@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './AddTodo.css';
 
-function useInputValue(defaultValue = '') {
+function useStateBinder(defaultValue = '') {
   const [value, setValue] = useState(defaultValue);
 
   return {
@@ -15,25 +15,41 @@ function useInputValue(defaultValue = '') {
   };
 }
 
+function useTitleValue() {
+  return useStateBinder();
+}
+
+function useDescriptionValue() {
+  return useStateBinder();
+}
+
 function AddTodo({ onCreate }) {
-  const input = useInputValue('');
+  const title = useTitleValue('');
+  const description = useDescriptionValue('');
 
   function submitHandler(event) {
     event.preventDefault();
 
-    if (input.value().trim()) {
-      onCreate(input.value());
-      input.clear();
+    if (title.value().trim()) {
+      onCreate({ title: title.value(), description: description.value() });
+      title.clear();
+      description.clear();
     }
   }
 
   return (
     <form className="todo-add-form" onSubmit={submitHandler}>
-      Title:&nbsp;
-      <input {...input.bind} />
-      Description:&nbsp;
-      <input {...input.bind} />
-      <button type="submit">Add</button>
+      <div className="input-fields">
+        <div className="title-field-label">Title*:</div>
+        <input className="title" {...title.bind} />
+        <div className="description-field">
+          <div className="description-field-label">Description:</div>
+          <textarea className="description" {...description.bind} />
+        </div>
+      </div>
+      <div className="submit-button__wrapper">
+        <button type="submit">Add</button>
+      </div>
     </form>
   );
 }
