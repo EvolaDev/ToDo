@@ -25,36 +25,34 @@ function TodoItem({ todo, onChange }) {
           onChange={() => onChange(todo.id)}
         />
         &nbsp;
-        {todo.isEdited ? (
-          <input
+        {todo.isEdited 
+        ? ( <input
             value={todo.title}
             onChange={(event) => updateTitle(event.target.value, todo.id)}
-          />
-        ) : (
-          <div className="todo-title" title={todo.title}>
+          /> ) 
+        : ( <div className="todo-title" title={todo.title}>
             <strong>{todo.title}:</strong>
-          </div>
-        )}
+            </div> )}
         &nbsp;
-        {todo.isEdited ? (
-          <input
+        {todo.isEdited 
+        ? ( <input
             value={todo.description}
             onChange={(event) => updateDescription(event.target.value, todo.id)}
-          />
-        ) : (
+          /> )
+        : (
           <div className="todo-description" title={todo.description}>
             {todo.description}
           </div>
         )}
       </div>
       <div className="buttons__wrapper">
-        {todo.isEdited ? (
-          <div
+        {todo.isEdited 
+        ? ( <div
             className="save-button"
             title="save-changes"
             onClick={saveTodo.bind(null, todo.id)}
-          ></div>
-        ) : (
+          ></div>)
+        : (
           <div
             className="edit-button"
             title="edit task"
